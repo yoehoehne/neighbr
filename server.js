@@ -3,69 +3,68 @@ var http = require('http');
 var fs = require('fs');
 var express = require('express')
 var bodyParser = require('body-parser');
-var MongoClient = require('mongodb').MongoClient;
+var mongoskin = require('mongoskin')
 var app = express();
 app.use(bodyParser.json());
 
 var dbURL = "mongodb://localhost/neighbr";
+var db = mongoskin.db(dbURL, {safe:true});
+var collections = ['threads', 'users'];
+
 
 var server = app.listen(8080, function () {
 
     var host = server.address().address;
     var port = server.address().port;
 
-    console.log('Example app listening at http://%s:%s', host, port)
+    console.log('Listening at http://%s:%s', host, port)
 
+});
+
+app.param('collectionName', function(req, res, next, collectionName){
+    if(collections.indexOf(collectionName) == -1)
+    {
+        res.writeHead(404);
+        res.end();
+    }
+    req.collection = db.collection(collectionName);
+    return next();
 });
 
 /***** Routes *******************/
 app.get('/', function (req, res) {
-    res.send('Hello World!')
+    res.sendFile(__dirname + '/html/index.html')
 });
 
 app.use('/', express.static('./html', {
     maxAge: 60 * 60 * 1000
 }));
 
-app.post('/api/newThread', function (req, res) {
-    var thread;
-    thread = req.body;
-    addThread(thread, res);
-});
 
-app.post('/api/getThreads', function(req,res){
+/**
+ * Gets threads based on given Location
+ */
+app.post('/api/:collectionName', function(req,res){
     var location = req.body;
 
 });
 
-app.get('/api/getThreads', function(req,res){
-    MongoClient.connect(dbURL, function(err,db){
-        db.collection('threads').find(function(err,values){
-            res.writeHead(200);
-            res.end(values)
-        })
+/**
+ * Adds a new thread
+ */
+app.post('/api/new/:collectionName', function(req, res) {
+    req.collection.insert(req.body, {}, function(e, results){
+        if (e) return next(e)
+        res.send(results)
     })
 })
 
-
-
-/*********** Other Functions ********************/
-
-var addThread = function(obj, res)
-{
-    addToDB('threads', obj, res);
-}
-
-
-var addToDB = function (collection, obj, res) {
-    MongoClient.connect(dbURL, function (err, db) {
-        if (err) { throw err; }
-
-        db.collection(collection).insert(obj, function (err, records) {
-            if (err) { throw err; }
-            console.log("added "+obj);
-            res.writeHead(200);
-            res.end();
-        });
-    });
-}
+/**
+ * Gets all threads in the db
+ */
+app.get('/api/:collectionName', function(req, res) {
+    req.collection.find().toArray(function(e, results){
+        if (e) return next(e)
+        res.send(results)
+    })
+})
