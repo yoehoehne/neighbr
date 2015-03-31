@@ -1,10 +1,169 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Bootstrap 3, from LayoutIt!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+	<!--link rel="stylesheet/less" href="less/bootstrap.less" type="text/css" /-->
+	<!--link rel="stylesheet/less" href="less/responsive.less" type="text/css" /-->
+	<!--script src="js/less-1.3.3.min.js"></script-->
+	<!--append ‘#!watch’ to the browser URL, then refresh the page. -->
+	
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+  <![endif]-->
+
+  <!-- Fav and touch icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
+  <link rel="shortcut icon" href="img/favicon.png">
+  
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/scripts.js"></script>
+	
+	<script type="text/javascript">
+        function addTable() {
+
+            var myTableDiv = document.getElementById("MessageBoardTable")
+            var table = document.createElement('TABLE')
+            var tableBody = document.createElement('TBODY')
+
+            table.border = '1'
+            table.appendChild(tableBody);
+
+            var stock = new Array()
+            stock[0] = "Post 0"
+			stock[1] = "Post 1"
+			stock[2] = "Post 2"
+			stock[3] = "Post 3"
+			stock[4] = "Post 4"
+			stock[5] = "Post 5"
+			stock[6] = "Post 6"
+			stock[7] = "Post 7"
+			stock[8] = "Post 8"
+			stock[9] = "Post 9"
+			stock[10] = "Post 10"
+			stock[11] = "Post 11"
+			stock[12] = "Post 12"
+			stock[13] = "Post 13"
+			stock[14] = "Post 14"
+			stock[15] = "Post 15"
+			stock[16] = "Post 16"
+			stock[17] = "Post 17"
+
+            //TABLE ROWS
+            for (i = 0; i < stock.length; i++) {
+				var tr = document.createElement('TR');
+				for (j = 0; j < 5; j++) {
+					var td = document.createElement('TD')
+					td.appendChild(document.createTextNode(stock[(i*4)+j]));
+					td.width = '125';
+					td.height = '100';
+					tr.appendChild(td)
+				}
+				tableBody.appendChild(tr);
+			}
+
+            myTableDiv.appendChild(table)
+        }
+    </script>
+	<style type="text/css">
+      #map-canvas { height: 200px; width: 370px; margin: 0; padding: 0;}
+    </style>
+	<script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDV8qVb-dG-Ct4bVbdw8-Cq4_Ax2UTxo1w">
+    </script>
+	<script type="text/javascript">
+      function initialize() {
+        var mapOptions = {
+          center: { lat: 40.2513513, lng: -111.6608},
+          zoom: 13
+        };
+        var map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
+
 </head>
+
 <body>
-Hello, World!
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<h1>
+				neighbr
+			</h1>
+			<div class="row clearfix">
+				<div class="col-md-8 column">
+					<h3>
+						Message Board
+					</h3>
+					<div id="MessageBoardTable" style="overflow-y:scroll; height:460px;"></div><!--Scrollable-->
+				</div>
+				<div class="col-md-4 column">
+					<h3>
+						Current thread
+					</h3>
+					<div style="overflow-y:scroll; height:150px;">
+					<ul>
+						<li>
+							Original post
+						</li>
+						<li>
+							Reply
+						</li>
+						<li>
+							Reply
+						</li>
+						<li>
+							Reply
+						</li>
+						<li>
+							Reply
+						</li>
+						<li>
+							Reply
+						</li>
+						<li>
+							Reply
+						</li>
+						<li>
+							Reply
+						</li>
+						<li>
+							Reply
+						</li>
+					</ul>
+					</div>
+					<form role="form">
+						<div class="form-group">
+							 <label for="exampleInputEmail1">Comments</label><input type="email" class="form-control" id="exampleInputEmail1">
+						</div>
+						<div class="button">
+							 <button type="submit" class="btn btn-default" onclick="Javascript:addTable()">Submit</button>
+						</div> 
+					</form>
+					<div id="map-canvas"></div>
+					<div class="row clearfix">
+						<div class="col-md-12 column">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>
