@@ -5,21 +5,16 @@ var express = require('express')
 var bodyParser = require('body-parser');
 var mongoskin = require('mongoskin')
 var app = express();
+var server = http.createServer(app)
+
+
 app.use(bodyParser.json());
+server.listen(8080);
 
 var dbURL = "mongodb://localhost/neighbr";
 var db = mongoskin.db(dbURL, {safe:true});
 var collections = ['threads', 'users'];
-
-
-var server = app.listen(8080, function () {
-
-    var host = server.address().address;
-    var port = server.address().port;
-
-    console.log('Listening at http://%s:%s', host, port)
-
-});
+var io = require('./sockets').listen(server, db.collection('threads'));
 
 app.param('collectionName', function(req, res, next, collectionName){
     if(collections.indexOf(collectionName) == -1)
@@ -68,3 +63,7 @@ app.get('/api/:collectionName', function(req, res) {
         res.send(results)
     })
 })
+
+
+//********* Socket.io ************
+
