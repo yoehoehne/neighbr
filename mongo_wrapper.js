@@ -12,8 +12,7 @@ var Thread = mongoose.model('Thread');
 var db = mongoose.connect('mongodb://localhost/neighbr');
 
 
-//CRUD operations for the threads collection:
-
+//***********************************************CRUD operations for the threads collection************************************************
 //Create: The first argument is a fully created Thread model
 var createThread = function(data, callback)
 {
@@ -29,33 +28,57 @@ var createThread = function(data, callback)
 	});
 }
 
-//Read:
-var readThreads = function(data, callback)
+//Read: Returns all threads.
+var readThreads = function(callback)
 {
 	Thread.find(function(err, data)
 	{
 		if(err)
 			return next(err);
-		console.log(data);
+		//console.log(data);
 		callback(data);	//Return the whole collection...
 	})
 }
 
-//Update:
-var updateThread = function(data, callback)
+//Update: Query based on the Object ID of the thread, which should be stored in an array in the user.
+//Update with the name-value pairs in the array 'data'
+var updateThread = function(threadID, data, callback)
 {
-	console.log("Stub.")
+	var query = Thread.findOne().where('ObjectID', username);
+	query.exec(function(err, doc)
+	{
+		var i;
+		for(i = 0; i < data.length; i++)
+		{
+			var tuple = data[i];
+			doc.set(data[i].name, data[i].value);		//Test this...
+			doc.save(function(err)
+			{
+				console.log(doc.toJSON());	//Print out the new object that was just saved.
+			});
+		}
+	});
+
+	callback("SUCCESS");
 }
 
-//Delete:
-var deleteThread = function(data, callback)
+//Delete: Delete the thread in the database that is associated with this ID.
+var deleteThread = function(threadID, callback)
 {
-	console.log("Stub.")
+	var query = Thread.findOne().where('ObjectID', threadID);	
+	query.exec(function(err, doc)
+	{
+		doc.remove(function(err, deletedDoc)
+		{
+			console.log("thread deleted.");
+		})
+	});
+
+	callback("SUCCESS");
 }
 
 
-//CRUD operations for the users collection:
- 
+//**********************************************CRUD operations for the users collection************************************************
 //Create: The first argument is a fully created User model
 var createUser = function(data, callback)
 {
@@ -71,7 +94,7 @@ var createUser = function(data, callback)
 	});
 }
 
-//Read:
+//Read: Returns all users.
 var readUsers = function(callback)
 {
 	console.log("Read Users was called.");
@@ -80,7 +103,7 @@ var readUsers = function(callback)
 	{
 		if(err)
 			return next(err);
-		console.log(data);
+		//console.log(data);
 		callback(data);	//Return the whole collection...
 	})
 }
@@ -107,8 +130,37 @@ var updateUser = function(username, data, callback)
 	callback("SUCCESS");
 }
 
+//Adds a thread to a user array.
+var addThread = function(username, threadObjectID)
+{
+	var query = User.findOne().where('username', username);
+	query.exec(function(err, user)
+	{
+		user.addThread(threadObjectID, function(query)
+		{
+			console.log("Added this thread to the user in the array.");
+			console.log(user);
+		});
+	});
+}
+
+//Removes a specified thread from a user array.
+var removeThread = function(username, threadObjectID)
+{
+	var query = User.findOne().where('username', username);
+
+	query.exec(function(err, user)
+	{
+		user.removeThread(threadObjectID, function(query)
+		{
+			console.log("Removed this thread to the user in the array.");
+			console.log(user);
+		});
+	});
+}
+
 //Delete: Deletes the user associated with this username.
-var deleteUser = function(username, data, callback)
+var deleteUser = function(username, callback)
 {
 	var query = User.findOne().where('username', username);
 	query.exec(function(err, doc)
@@ -122,7 +174,6 @@ var deleteUser = function(username, data, callback)
 	callback("SUCCESS");
 }
 
-
 module.exports.createThread = createThread;
 module.exports.readThreads = readThreads;
 module.exports.updateThread = updateThread;
@@ -133,6 +184,8 @@ module.exports.readUsers = readUsers;
 module.exports.updateUser = updateUser;
 module.exports.deleteUser = deleteUser;
 
+module.exports.addThread = addThread;
+module.exports.removeThread = removeThread;
 
 /*
 	var testGPS = new GPSCoordinate({longitude: 25.5, latitude: 13.2})
@@ -145,4 +198,11 @@ module.exports.deleteUser = deleteUser;
 			console.log("error.")
 		else
 			console.log("I saved something!")
-	})*/
+	})
+*/
+
+/*	
+	var testGPS = new GPSCoordinate({longitude: 25.5, latitude: 13.2});
+	var current = new Date();
+	var testThread = new Thread({firstPost: "This is the first post!", timestamp: current, comments: []})
+*/
