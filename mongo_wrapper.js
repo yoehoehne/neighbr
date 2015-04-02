@@ -40,6 +40,18 @@ var readThreads = function(callback)
 	})
 }
 
+
+var readThread = function(threadID, callback)
+{
+    Thread.findOne().where({'ObjectID': threadID}, (function(err, thread)
+    {
+        if(err)
+            return next(err);
+        //console.log(data);
+        callback(thread);	//Return the whole collection...
+    }));
+}
+
 //Update: Query based on the Object ID of the thread, which should be stored in an array in the user.
 //Update with the name-value pairs in the array 'data'
 var updateThread = function(threadID, data, callback)

@@ -14,7 +14,7 @@ server.listen(8080);
 var dbURL = "mongodb://localhost/neighbr";
 var db = mongoskin.db(dbURL, {safe:true});
 var collections = ['threads', 'users'];
-var io = require('./sockets').listen(server, db.collection('threads'));
+var io = require('./sockets').listen(server);
 
 app.param('collectionName', function(req, res, next, collectionName){
     if(collections.indexOf(collectionName) == -1)
