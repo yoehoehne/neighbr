@@ -28,6 +28,22 @@ var createThread = function(data, callback)
 	});
 }
 
+//Will add a comment to the array of comments in the given thread.
+var addComment = function(threadID, commentData, callback)
+{
+	var query = Thread.findOne().where('ObjectID', threadID);
+	query.exec(function(err, thread)
+	{
+		thread.addComment(commentData, function(query)
+		{
+			console.log("Added this comment to the thread in the array.");
+			console.log(thread);
+		});
+	});
+
+	callback("SUCCESS");
+}
+
 //Read: Returns all threads.
 var readThreads = function(callback)
 {
@@ -56,7 +72,7 @@ var readThread = function(threadID, callback)
 //Update with the name-value pairs in the array 'data'
 var updateThread = function(threadID, data, callback)
 {
-	var query = Thread.findOne().where('ObjectID', username);
+	var query = Thread.findOne().where('ObjectID', threadID);
 	query.exec(function(err, doc)
 	{
 		var i;
@@ -198,6 +214,7 @@ module.exports.deleteUser = deleteUser;
 
 module.exports.addThread = addThread;
 module.exports.removeThread = removeThread;
+module.exports.addComment = addComment;
 
 /*
 	var testGPS = new GPSCoordinate({longitude: 25.5, latitude: 13.2})
