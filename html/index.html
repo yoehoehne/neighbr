@@ -26,8 +26,8 @@
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/apple-touch-icon-72-precomposed.png">
   <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57-precomposed.png">
   <link rel="shortcut icon" href="img/favicon.png">
-
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/scripts.js"></script>
@@ -37,53 +37,207 @@
     <script type="text/javascript" src="/bower_components/angular-socket-io/socket.js"></script>
 	
 	<script type="text/javascript">
+						var text = '{ "threads" : [' +
+							'{ "locationX":52.4, "locationX":60.3, "timestamp":802.11,' +
+								' "entries" : [' +
+									'{"message":"How is everyone?", "name":"sk8trkd"},' +
+									'{"message":"Good, thanks, and you?", "name":"mollyJane"},' +
+									'{"message":"Splendiferous", "name":"sk8trkd"},' +
+									'{"message":"Has anyone seen my puppy", "name":"Mary-Lou"},' +
+									'{"message":"No...and technically speaking, you should have started that in a new message board", "name":"sk8trkd"},' +
+									'{"message":"Why?", "name":"Mary-Lou"},' +
+									'{"message":"Just to keep things organized", "name":"sk8trkd"},' +
+									'{"message":"Yeah, I have your cat, kid, and might give him back for a ransom", "name":"black-van"},' +
+									'{"message":"Oh no!", "name":"Mary-Lou"},' +
+									'{"message":"We gotta find this loser", "name":"sk8trkd"},' +
+									'{"message":"Well he has to be within a three-block radius", "name":"mollyJane"}' +
+								']' +
+							'},' +
+							'{ "locationX":52.4, "locationX":60.3, "timestamp":802.11,' +
+								' "entries" : [' +
+									'{"message":"How about a test?", "name":"sk8trkd"}' +
+								']' +
+							'},' +
+							'{ "locationX":52.4, "locationX":60.3, "timestamp":802.11,' +
+								' "entries" : [' +
+									'{"message":"Test again", "name":"sk8trkd"}' +
+								']' +
+							'},' +
+							'{ "locationX":52.4, "locationX":60.3, "timestamp":802.11,' +
+								' "entries" : [' +
+									'{"message":"So I want one that has a whole lot of text so I can test how well it all fits within the neccesary boundaries. This should push me over the edge and into tomorrow", "name":"Samson McGilligan"}' +
+								']' +
+							'},' +
+							'{ "locationX":52.4, "locationX":60.3, "timestamp":802.11,' +
+								' "entries" : [' +
+									'{"message":"Just want to make sure everything works right", "name":"sk8trkd"}' +
+								']' +
+							'},' +
+							'{ "locationX":52.4, "locationX":60.3, "timestamp":802.11,' +
+								' "entries" : [' +
+									'{"message":"See anything good lately?", "name":"sk8trkd"}' +
+								']' +
+							'},' +
+							'{ "locationX":52.4, "locationX":60.3, "timestamp":802.11,' +
+								' "entries" : [' +
+									'{"message":"Read anything good lately?", "name":"sk8trkd"}' +
+								']' +
+							'},' +
+							'{ "locationX":52.4, "locationX":60.3, "timestamp":802.11,' +
+								' "entries" : [' +
+									'{"message":"How about a game of go fish?", "name":"sk8trkd"}' +
+								']' +
+							'},' +
+							'{ "locationX":52.4, "locationX":60.3, "timestamp":802.11,' +
+								' "entries" : [' +
+									'{"message":"Pretty quiet neighborhood", "name":"sk8trkd"}' +
+								']' +
+							'},' +
+							'{ "locationX":52.4, "locationX":60.3, "timestamp":802.11,' +
+								' "entries" : [' +
+									'{"message":"Seriously, is no one else here?", "name":"sk8trkd"}' +
+								']' +
+							'},' +
+							'{ "locationX":52.4, "locationX":60.3, "timestamp":802.11,' +
+								' "entries" : [' +
+									'{"message":"*cricket chirps*", "name":"sk8trkd"}' +
+								']' +
+							'},' +
+							'{ "locationX":52.4, "locationX":60.3, "timestamp":802.11,' +
+								' "entries" : [' +
+									'{"message":"Almost done with these test cases", "name":"sk8trkd"}' +
+								']' +
+							'},' +
+							'{ "locationX":52.4, "locationX":60.3, "timestamp":802.11,' +
+								' "entries" : [' +
+									'{"message":"One more, you think?", "name":"sk8trkd"}' +
+								']' +
+							'},' +
+							'{ "locationX":52.4, "locationX":60.3, "timestamp":802.11,' +
+								' "entries" : [' +
+									'{"message":"Yeah, this will be the end", "name":"sk8trkd"}' +
+								']' +
+							'}' +
+						']}';
+			var jsonObject = JSON.parse(text);
+	
+	
         function addTable() {
 
             var myTableDiv = document.getElementById("MessageBoardTable")
             var table = document.createElement('TABLE')
             var tableBody = document.createElement('TBODY')
 
-            table.border = '1'
-            table.appendChild(tableBody);
-
-            var stock = new Array()
-            stock[0] = "Post 0"
-			stock[1] = "Post 1"
-			stock[2] = "Post 2"
-			stock[3] = "Post 3"
-			stock[4] = "Post 4"
-			stock[5] = "Post 5"
-			stock[6] = "Post 6"
-			stock[7] = "Post 7"
-			stock[8] = "Post 8"
-			stock[9] = "Post 9"
-			stock[10] = "Post 10"
-			stock[11] = "Post 11"
-			stock[12] = "Post 12"
-			stock[13] = "Post 13"
-			stock[14] = "Post 14"
-			stock[15] = "Post 15"
-			stock[16] = "Post 16"
-			stock[17] = "Post 17"
+            
+            table.appendChild(tableBody);			
+			
 
             //TABLE ROWS
-            for (i = 0; i < stock.length; i++) {
+			var i = 0;
+            while (i < jsonObject.threads.length) 
+			{
 				var tr = document.createElement('TR');
-				for (j = 0; j < 5; j++) {
+				for(var j = 0; j < 3; j++)
+				{
 					var td = document.createElement('TD')
-					td.appendChild(document.createTextNode(stock[(i*4)+j]));
-					td.width = '125';
-					td.height = '100';
+					td.id = i;
+					
+					var pMessage = document.createElement("p");
+					var divMessage = document.createElement("div");
+					var divUsername = document.createElement("div");
+					var message = document.createElement('message')
+					var username = document.createElement('username')
+					var messageToDisplay = jsonObject.threads[i].entries[0].message;
+					if(messageToDisplay.length > 120)
+					{
+						messageToDisplay = messageToDisplay.substring(0, 117);
+						messageToDisplay += "...";
+					}
+					message.appendChild(document.createTextNode(messageToDisplay));
+					username.appendChild(document.createTextNode("--" + jsonObject.threads[i].entries[0].name));
+					pMessage.appendChild(message);
+					divMessage.appendChild(pMessage);
+					divUsername.appendChild(username);
+					td.width = '205';
+					td.height = '200';
+					td.appendChild(divMessage);
+					td.appendChild(divUsername);
+					
+					td.onclick = function()
+									{ 		
+										var focusText = "<b>";
+										focusText += jsonObject.threads[this.id].entries[0].message
+										focusText += "<br> --";
+										focusText += jsonObject.threads[this.id].entries[0].name;
+										focusText += "</b><ul><br>";
+										var index = 1;
+										while(index < jsonObject.threads[this.id].entries.length)
+										{
+											focusText += "<li>";
+											focusText += jsonObject.threads[this.id].entries[index].message;
+											focusText += "<br>-- ";
+											focusText += jsonObject.threads[this.id].entries[index].name;
+											focusText += "</li>";
+											index++;
+										}
+										focusText +="</ul>";
+										
+										document.getElementById("focusBoard").innerHTML = focusText;
+									};
 					tr.appendChild(td)
+					i++;
+					if(i == jsonObject.threads.length)
+						j = 3;
 				}
 				tableBody.appendChild(tr);
 			}
-
+			
+			<!--After design, have code to populate the posts with filler data...Angular-->
+			<!--Then make it so that this updates the comments when you click on the post...Angular-->
+			<!--Add interaction with Server-->
+			<!--Get data directly from Server-->
             myTableDiv.appendChild(table)
         }
     </script>
+	<style>
+	body  
+	{
+		background-image: url("img/corkboard-background+55.png");
+	}
+	
+	td
+	{
+		background-image: url("img/post_it.png");
+		background-size: 200px 200px;
+		background-repeat: no-repeat;
+	}
+	message
+	{
+		font-size: 14px;
+		font-weight: bold;
+	}
+	username
+	{
+		padding-left: 40px;
+		font-size: 14px;
+		font-weight: bold;
+	}
+	p
+	{
+		padding-left:20px;
+		padding-right:20px;
+		padding-top:20px;
+	}
+	#focusBoard
+	{
+		background-image: url("img/chatBackground.png");
+		padding-left: 10px;
+		padding-top: 5px;
+	}
+	
+	</style>
 	<style type="text/css">
-      #map-canvas { height: 200px; width: 370px; margin: 0; padding: 0;}
+      #map-canvas { height: 200px; width: 360px; margin: 0; padding: 0;}
     </style>
 	<script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDV8qVb-dG-Ct4bVbdw8-Cq4_Ax2UTxo1w">
@@ -99,67 +253,52 @@
       }
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
-
-
+	
+	
 </head>
 
-<body>
+<body onload="addTable()">
 <div class="container">
 	<div class="row clearfix">
 		<div class="col-md-12 column">
-			<h1>
+			<h1 id="productName">
 				neighbr
 			</h1>
 			<div class="row clearfix">
 				<div class="col-md-8 column">
-					<h3>
-						Message Board
-					</h3>
-					<div id="MessageBoardTable" style="overflow-y:scroll; height:460px;"></div><!--Scrollable-->
+					<div>
+						<h3>
+							Message Board
+							<!--<button  type="button" class="btn btn-primary">Click to Refresh</button>-->
+							<sp style="padding-left:425px"></sp>
+							<button type="button" class="btn btn-success">Create New Thread</button>
+						</h3> 
+					</div>
+					<div id="MessageBoardTable" style="overflow-y:scroll; height:451px;"></div>
 				</div>
 				<div class="col-md-4 column">
 					<h3>
-						Current thread
+						Current Thread
 					</h3>
-					<div style="overflow-y:scroll; height:150px;">
-					<ul>
-						<li>
-							Original post
-						</li>
-						<li>
-							Reply
-						</li>
-						<li>
-							Reply
-						</li>
-						<li>
-							Reply
-						</li>
-						<li>
-							Reply
-						</li>
-						<li>
-							Reply
-						</li>
-						<li>
-							Reply
-						</li>
-						<li>
-							Reply
-						</li>
-						<li>
-							Reply
-						</li>
-					</ul>
+					<div id="focusBoard" style="overflow-y:scroll; height:210px;">
+						<b>Hey guys, did anyone see a red jeep drive by with a dealer's plate?<br> --Sally McField</b>
+						<ul>
+							<br>
+							<li>
+								I just saw it! Looked like drunk driving, weaving and bobbing all over!<br> -- Jane down the street
+							</li>
+							<li>
+								What is it? Some crazy psycho?!<br> --sk8trkid
+							</li>
+							<li>
+								No, my four year old!<br> --Sally McField
+							</li>
+						</ul>
 					</div>
-					<form role="form">
-						<div class="form-group">
-							 <label for="exampleInputEmail1">Comments</label><input type="email" class="form-control" id="exampleInputEmail1">
-						</div>
-						<div class="button">
-							 <button type="submit" class="btn btn-default" onclick="Javascript:addTable()">Submit</button>
-						</div> 
-					</form>
+					<div style="padding-top:5px; padding-bottom:10px">
+						<input id="comment" style="height:32px; width:287px;">
+						<button type="submit" class="btn btn-success">Submit</button>
+					</div>
 					<div id="map-canvas"></div>
 					<div class="row clearfix">
 						<div class="col-md-12 column">
