@@ -2,10 +2,14 @@
 var express = require('express');
 var mongoose = require('mongoose');
 
+require('./models/Comment')
 require('./models/Threads');
 require('./models/Users');
 require('./models/GPSCoordinate')
 
+
+
+var Comment = mongoose.model('Comment');
 var GPSCoordinate = mongoose.model('GPSCoordinate')
 var User = mongoose.model('User');
 var Thread = mongoose.model('Thread');
@@ -64,9 +68,9 @@ var readThread = function(threadID, callback)
         if(err)
             return next(err);
         //console.log(data);
-        callback(thread);	//Return the whole collection...
+        callback(thread);
     }));
-}
+};
 
 //Update: Query based on the Object ID of the thread, which should be stored in an array in the user.
 //Update with the name-value pairs in the array 'data'
