@@ -76,7 +76,7 @@ var readThreadsNearby = function(loc, radius, callback)
 			return err;
 		}
 		return callback(threads);
-	}
+	})
 }	
 
 var readThread = function(threadID, callback)
