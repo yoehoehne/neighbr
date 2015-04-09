@@ -63,13 +63,9 @@ var readThreads = function(callback)
 
 var readThread = function(threadID, callback)
 {
-    Thread.findOne().where({'ObjectID': threadID}, (function(err, thread)
-    {
-        if(err)
-            return next(err);
-        //console.log(data);
-        callback(thread);
-    }));
+    Thread.findOne().where({'ObjectID': threadID}, function(err, data){
+        callback(err, thread);
+    });
 };
 
 //Update: Query based on the Object ID of the thread, which should be stored in an array in the user.
@@ -210,6 +206,7 @@ module.exports.createThread = createThread;
 module.exports.readThreads = readThreads;
 module.exports.updateThread = updateThread;
 module.exports.deleteThread = deleteThread;
+module.exports.readThread = readThread;
 
 module.exports.createUser = createUser;
 module.exports.readUsers = readUsers;
