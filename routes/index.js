@@ -27,3 +27,32 @@ router.post('/threads', function(req, res, next) {
         res.json(thread);
     });
 });
+
+/*
+ * Get all threads within a given Location
+ */
+router.get('/api/threads/', function(req, res) {
+    var radius = req.params[0];
+    var latitude = req.params[1];
+    var longitude = req.params[2];    
+
+    mongoWrapper.readNearbyThreads(radius, latitude, longitude, null);
+});
+
+router.get('/', function(req, res) {
+    res.sendFile(_dirname + '/../html/index.html')
+});
+
+/**
+ * Adds a new thread
+ */
+router.post('/api/thread', function(req, res, next) {
+    var thread = new Thread(req.params[0], new Date().toJSON(), req.params[1], req.params[2], []);
+    mongoWrapper.createThread(thread);  
+});
+
+/**
+ * Gets all threads in the database
+ */
+router.get('/threads', function(req, res) {
+});
