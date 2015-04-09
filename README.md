@@ -1,2 +1,0 @@
-# neighbr
-Neighbr website
