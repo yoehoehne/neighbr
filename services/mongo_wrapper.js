@@ -2,10 +2,10 @@
 var express = require('express');
 var mongoose = require('mongoose');
 
-require('./models/Comment')
-require('./models/Threads');
-require('./models/Users');
-require('./models/GPSCoordinate')
+require('../models/Comment')
+require('../models/Threads');
+require('../models/Users');
+require('../models/GPSCoordinate')
 
 
 
@@ -13,7 +13,7 @@ var Comment = mongoose.model('Comment');
 var GPSCoordinate = mongoose.model('GPSCoordinate')
 var User = mongoose.model('User');
 var Thread = mongoose.model('Thread');
-var db = mongoose.connect('mongodb://localhost/neighbr');
+var db = mongoose.createConnection('mongodb://localhost/neighbr');
 
 
 //***********************************************CRUD operations for the threads collection************************************************
