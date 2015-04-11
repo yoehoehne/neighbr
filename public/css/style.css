@@ -1,0 +1,40 @@
+	body  
+	{
+		background-image: url("../img/corkboard-background+55.png");
+	}
+	username
+	{
+		padding-left: 40px;
+		font-size: 14px;
+		font-weight: bold;
+	}
+	p
+	{
+		padding-left:20px;
+		padding-right:20px;
+		padding-top:40px;
+		font-size: 14px;
+		font-weight: bold;
+	}
+	.label 
+	{
+		float: left;
+		text-align: left;
+		background-image: url("../img/post_it.png");
+		background-size: 200px 200px;
+		background-repeat: no-repeat;
+		width:205px;
+		height:200px;
+		color:black;
+		
+	}
+	#focusBoard
+	{
+		background-image: url("../img/chatBackground.png");
+		padding-left: 10px;
+		padding-top: 5px;
+	}
+	#map-canvas 
+	{ 
+		height: 170px; width: 360px; margin: 0; padding: 0;
+	}

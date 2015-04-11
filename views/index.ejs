@@ -2,6 +2,7 @@
 <html ng-app="neighbr">
 <head>
 	<link href="../public/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../public/css/style.css" rel="stylesheet">
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
 	<script src="../public/js/app.js"></script>
 	<script type="text/javascript">
@@ -95,48 +96,6 @@
 		}
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
-	
-	<style type="text/css">
-      #map-canvas { height: 170px; width: 360px; margin: 0; padding: 0;}
-    </style>
-	<style>
-	body  
-	{
-		background-image: url("../public/img/corkboard-background+55.png");
-	}
-	username
-	{
-		padding-left: 40px;
-		font-size: 14px;
-		font-weight: bold;
-	}
-	p
-	{
-		padding-left:20px;
-		padding-right:20px;
-		padding-top:40px;
-		font-size: 14px;
-		font-weight: bold;
-	}
-	.label 
-	{
-		float: left;
-		text-align: left;
-		background-image: url("../public/img/post_it.png");
-		background-size: 200px 200px;
-		background-repeat: no-repeat;
-		width:205px;
-		height:200px;
-		color:black;
-		
-	}
-	#focusBoard
-	{
-		background-image: url("../public/img/chatBackground.png");
-		padding-left: 10px;
-		padding-top: 5px;
-	}
-	</style>	
 </head>
 
 <body ng-controller="Controller" onload="CheckCoordinate()">
