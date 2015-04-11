@@ -14,34 +14,17 @@ var mongoWrapper = require('./../services/mongo_wrapper')
 /*
  * Get all threads within a given Location
  */
-router.get('/threads/:location', function(req, res) {
-    var latitude = req.params[0];
-    var longitude = req.params[1];    
-     //Thread.find(function(err, 
-});
-
-/**
- * Adds a new thread
- */
-router.post('/threads', function(req, res, next) {
-    var thread = new Thread(req.params[0], new Date().toJSON(), req.params[1], req.params[2], []);
-    thread.save(function(err, thread) {
+router.post('/api/nearByThreads', function(req, res, next) {
+    var radius = req.body.radius;
+    var latitude = req.body.latitude;
+    var longitude = req.body.longitude;    
+	
+    mongoWrapper.readNearbyThreads(radius, latitude, longitude, function(err, result) {
         if (err) {
-            return next(err);
+            throw err;
         }
-        res.json(thread);
+        res.json(result);
     });
-});
-
-/*
- * Get all threads within a given Location
- */
-router.get('/api/threads/', function(req, res) {
-    var radius = req.params[0];
-    var latitude = req.params[1];
-    var longitude = req.params[2];    
-
-    mongoWrapper.readNearbyThreads(radius, latitude, longitude, null);
 });
 
 router.get('/', function(req, res, next) {
@@ -52,7 +35,6 @@ router.get('/', function(req, res, next) {
  * Adds a new thread
  */
 router.post('/api/thread', function(req, res, next) {
-    //var thread = new Thread(req.params[0], new Date().toJSON(), req.params[1], req.params[2], []);
     var thread = new Thread(req.body);
     mongoWrapper.createThread(thread, function(err, result){
         if(err){
