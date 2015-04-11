@@ -31,7 +31,7 @@
                     var thread = {}
                     thread.firstPost = entry;
                     thread.timestamp = new Date();
-                    thread.location = {latitude: 5, longitude: 10}; // TODO: Replace with actual GPS coordinates
+                    thread.location = {latitude: latitude, longitude: longitude};
                     thread.comments = [];
                     $http.post('/api/thread', thread).
                         success(function(savedThread){
