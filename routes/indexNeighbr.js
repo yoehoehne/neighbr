@@ -15,11 +15,11 @@ var mongoWrapper = require('./../services/mongo_wrapper')
  * Get all threads within a given Location
  */
 router.post('/api/nearByThreads', function(req, res, next) {
-    var radius = req.body.radius;
-    var latitude = req.body.latitude;
-    var longitude = req.body.longitude;    
+    var radius = Number(req.body.radius);
+    var latitude = Number(req.body.latitude);
+    var longitude = Number(req.body.longitude);
 	
-    mongoWrapper.readNearbyThreads(radius, latitude, longitude, function(err, result) {
+    mongoWrapper.readNearbyThreads(latitude, longitude, radius, function(err, result) {
         if (err) {
             throw err;
         }
