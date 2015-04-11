@@ -1,0 +1,5 @@
+about to fork child process, waiting until server is ready for connections.
+forked process: 18532
+all output going to: /var/log/mongodb.log
+log file [/var/log/mongodb.log] exists; copied to temporary file [/var/log/mongodb.log.2015-04-11T17-23-17]
+child process started successfully, parent exiting
