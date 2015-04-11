@@ -25,10 +25,7 @@ var createThread = function(data, callback)
 	var thread = new Thread(data);
 	thread.save(function(err, thread)
 	{
-		if(err)
-			callback(err);
-		else
-			callback(thread);
+		callback(err, thread);
 	});
 }
 

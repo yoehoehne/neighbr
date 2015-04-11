@@ -1,5 +1,5 @@
 	angular.module('neighbr', [])
-	.controller('Controller', ['$scope', function (scope) 
+	.controller('Controller', ['$scope','$http', function (scope, $http)
 		{
 			var text = '{ "threads" : [' +
 						'{ "locationX":52.4, "locationX":60.3, "timestamp":802.11,' +
@@ -142,7 +142,27 @@
 				focusText +="</ul>";				
 				document.getElementById("focusBoard").innerHTML = focusText;
 				//Open room
-			};		
+			};
+
+            scope.NewThread = function ()
+            {
+                var entry = prompt("Enter your post:");
+                if (entry != null)
+                {
+                    var thread = {}
+                    thread.firstPost = entry;
+                    thread.timestamp = new Date();
+                    thread.location = {latitude: 5, longitude: 10}; // TODO: Replace with actual GPS coordinates
+                    thread.comments = [];
+                    $http.post('/api/thread', thread).
+                        success(function(savedThread){
+                            console.log(savedThread);
+                        }).
+                        error(function(data){
+                            console.log(data);
+                        })
+                }
+            }
 		}])
 		
 		

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html ng-app="neighbr">
 <head>
-	<link href="../public/css/bootstrap.min.css" rel="stylesheet">
-	<link href="../public/css/style.css" rel="stylesheet">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
-	<script src="../public/js/app.js"></script>
+	<script src="js/app.js"></script>
 	<script type="text/javascript">
 		
 		var latitude = 40.23;
@@ -41,14 +41,7 @@
 			}
 		}
 		
-		function NewThread() 
-		{
-			var entry = prompt("Enter your post:");    
-			if (entry != null) 
-			{
-				//Start a new thread with "entry" as its data
-			}
-		}
+
 		
 		function SubmitComment()
 		{
@@ -109,7 +102,7 @@
 							<h3>
 								Message Board
 								<sp style="padding-left:425px"></sp>
-								<button onclick="NewThread()" class="btn btn-success">Create New Thread</button>
+								<button ng-click="NewThread()" class="btn btn-success">Create New Thread</button>
 							</h3> 
 						</div>
 						<div style="overflow-y:scroll; height:451px;">

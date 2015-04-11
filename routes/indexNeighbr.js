@@ -9,7 +9,7 @@ var GPSCoordinate = mongoose.model('GPSCoordinate');
 var Thread = mongoose.model('Thread');
 var User = mongoose.model('User');
 var path = require('path');
-
+var mongoWrapper = require('./../services/mongo_wrapper')
 /******* Routes ************/
 /*
  * Get all threads within a given Location
@@ -52,8 +52,15 @@ router.get('/', function(req, res, next) {
  * Adds a new thread
  */
 router.post('/api/thread', function(req, res, next) {
-    var thread = new Thread(req.params[0], new Date().toJSON(), req.params[1], req.params[2], []);
-    mongoWrapper.createThread(thread);  
+    //var thread = new Thread(req.params[0], new Date().toJSON(), req.params[1], req.params[2], []);
+    var thread = new Thread(req.body);
+    mongoWrapper.createThread(thread, function(err, result){
+        if(err){
+            throw err;
+        }
+
+        res.json(result);
+    });
 });
 
 /**
