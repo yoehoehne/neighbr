@@ -59,21 +59,20 @@ var readThreads = function(callback)
 
 //Read: Returns threads within radius of a location
 //Needs testing
-var readThreadsNearby = function(loc, radius, callback)
+var readNearbyThreads = function(latitude, longitude, radius, callback)
 {
-	var yMax = loc.latitude + radius;
-	var yMin = loc.latitude - radius;
-	var xMax = loc.longitude + radius;
-	var xMin = loc.longitude - radius;
+	var yMax = latitude + radius;
+	var yMin = latitude - radius;
+	var xMax = longitude + radius;
+	var xMin = longitude - radius;
 
-	var query = Thread.find().where('longitude').gt(yMin).lt(yMax).where('latitude').gt(xMin).lt(xMax);
-	query.exec(function(err, threads)
-	{
-		if (err) {
-			return err;
-		}
-		return callback(threads);
-	})
+	var query = Thread.find().where('location.longitude').gt(yMin).lt(yMax).where('location.latitude').gt(xMin).lt(xMax);
+	query.exec(function(err, data) {
+            if (err) {
+                return err;
+	    }
+   	    return callback(err, data);
+        })
 }	
 
 var readThread = function(threadID, callback)
@@ -222,6 +221,8 @@ module.exports.readThreads = readThreads;
 module.exports.updateThread = updateThread;
 module.exports.deleteThread = deleteThread;
 module.exports.readThread = readThread;
+
+module.exports.readNearbyThreads = readNearbyThreads;
 
 module.exports.createUser = createUser;
 module.exports.readUsers = readUsers;
