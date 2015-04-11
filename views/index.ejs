@@ -1,27 +1,66 @@
 <!DOCTYPE html>
 <html ng-app="neighbr">
 <head>
-
 	<link href="../public/css/bootstrap.min.css" rel="stylesheet">
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
 	<script src="../public/js/app.js"></script>
 	<script type="text/javascript">
-		//Some way to refresh. Some button or timer that gets my long/lat and then updates both my map and my Messages
-		//Get this to work with all of the folders moved elsewhereDONE
-		//Joe says that some files don't load
-		//Why do we include angular twice? DONE
-		//Move angular into its own file
-		function NewThread() 
-		{
-		}
 		
-		function SubmitComment()
+		var latitude = 40.23;
+		var longitude = -111.65;
+		var searchRadius = 800;
+		var prevLat = 0;
+		var prevLong = 0;
+		var prevRadius = 800;
+		
+		function CheckCoordinate() 
 		{
+			var watchID = navigator.geolocation.watchPosition(function(position) 
+			{
+				latitude = position.coords.latitude;
+				longitude = position.coords.longitude;
+				if(Math.abs(latitude-prevLat) > .0001 || Math.abs(longitude-prevLong) > .0001)//Can play with this threshold value
+				{
+					prevLat = latitude;
+					prevLong = longitude;
+					initialize();
+				}	
+				RefreshMe();
+			});
 		}
 		
 		function ChangeRadius()
 		{
+			searchRadius = document.getElementById("radius").value*1609.34;
+			if(Math.abs(searchRadius - prevRadius) > 0)
+			{
+				prevRadius = searchRadius;
+				initialize();
+				RefreshMe();
+			}
 		}
+		
+		function NewThread() 
+		{
+			var entry = prompt("Enter your post:");    
+			if (entry != null) 
+			{
+				//Start a new thread with "entry" as its data
+			}
+		}
+		
+		function SubmitComment()
+		{
+			//Access socket.io and refresh this textarea accordingly
+		}
+		
+		function RefreshMe()
+		{
+			//Request update in data, refresh everything. 
+			//Send my variables: longitude, latitude, and searchRadius...maybe one day send user credentials as well
+			
+		}
+		
 	</script>
 	
 	<script id="jsbin-javascript">
@@ -35,7 +74,7 @@
 		{
 			var mapOptions = 
 			{
-				center: { lat: 40.2513513, lng: -111.6608},
+				center: { lat: latitude, lng: longitude},
 				zoom: 13
 			};
 			var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -49,8 +88,7 @@
 				fillOpacity: 0.35,
 				map: map,
 				center: map.center,
-				radius: 1000
-//				radius: Number(document.getElementById("radius").innerHTML)//Not quite working
+				radius: searchRadius
 			};
 			var cityCircle = new google.maps.Circle(circleOptions);
 
@@ -101,7 +139,7 @@
 	</style>	
 </head>
 
-<body ng-controller="Controller">
+<body ng-controller="Controller" onload="CheckCoordinate()">
 	<div class="container">
 		<div class="row clearfix">
 			<div class="col-md-12 column">
