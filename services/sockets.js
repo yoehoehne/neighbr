@@ -29,13 +29,16 @@ module.exports.listen = function (app) {
 
             console.log("commentPosted event fired")
             io.sockets.in(socket.room.id).emit('updateComments', socket.user, message);
+            mongo_wrapper.addComment()
 
 
-            //var comment = {
-            //    user: socket.user,
-            //    body: message,
-            //    timestamp: new Date()
-            //}
+            var comment =
+            {
+                body: message,
+                user: socket.user,
+                timestamp: new Date(),
+                thread: socket.room.id
+            }
             //
             //
             //mongo_wrapper.addComment(socket.room, comment);
@@ -47,12 +50,12 @@ module.exports.listen = function (app) {
 
         socket.on('switchRoom', function (newroom) {
             console.log("switchRoom event fired")
-            //mongo_wrapper.readThread(newroom.id, function(thread){
-            //    socket.leave(socket.room.id);
-            //    socket.join(newroom.id);
-            //    socket.room = newroom;
-            //    socket.emit('roomChanged', thread); // pass back the current thread
-            //});
+            mongo_wrapper.readThread(newroom.id, function(thread){
+                socket.leave(socket.room.id);
+                socket.join(newroom.id);
+                socket.room = newroom;
+                socket.emit('roomChanged', thread); // pass back the current thread
+            });
         });
 
 
