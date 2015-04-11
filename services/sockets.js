@@ -11,26 +11,21 @@ module.exports.listen = function (app) {
 
 
     io.sockets.on('connection', function (socket) {
+
+        socket.room = hallway;
+        socket.join(socket.room.id);
+        socket.user = "anonymous";
+
         // when the client emits 'adduser', this listens and executes
         socket.on('login', function (user) {
             // store the user in the socket session for this client
             socket.user = user;
-            // store the room name in the socket session for this client
-            socket.room = hallway;
-
-            // join the hallway
-            socket.join(socket.room.id);
-            socket.emit('roomChanged', {post: "Thread here", location : "better place"})
         });
 
 
         // when the client emits 'sendchat', this listens and executes
         socket.on('commentPosted', function (message) {
-
             console.log("commentPosted event fired")
-            io.sockets.in(socket.room.id).emit('updateComments', socket.user, message);
-            mongo_wrapper.addComment()
-
 
             var comment =
             {
@@ -39,22 +34,22 @@ module.exports.listen = function (app) {
                 timestamp: new Date(),
                 thread: socket.room.id
             }
-            //
-            //
-            //mongo_wrapper.addComment(socket.room, comment);
-            //io.collection.update({_id: socket.room}, {'$push': {comments: comment}}, function (err, results) {
-            //    if (err) throw err;
-            //    console.log("updated!");
-            //});
+
+            mongo_wrapper.addComment(socket.room.id, comment, function(thread){
+                io.sockets.in(socket.room.id).emit('updateComments', comment);
+            });
         });
 
         socket.on('switchRoom', function (newroom) {
             console.log("switchRoom event fired")
-            mongo_wrapper.readThread(newroom.id, function(thread){
+            mongo_wrapper.readThread(newroom.id, function(err,thread){
                 socket.leave(socket.room.id);
                 socket.join(newroom.id);
                 socket.room = newroom;
-                socket.emit('roomChanged', thread); // pass back the current thread
+                thread.populate('comments', function(err, popthread){
+                    socket.emit('roomChanged', popthread); // pass back the current thread
+                })
+
             });
         });
 

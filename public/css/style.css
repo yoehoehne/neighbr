@@ -38,3 +38,8 @@
 	{ 
 		height: 170px; width: 360px; margin: 0; padding: 0;
 	}
+
+    .comment-item
+    {
+        margin-bottom: 20px;
+    }

@@ -12,7 +12,8 @@ var threadSchema = new mongoose.Schema(
 	firstPost: String,
 	timestamp: Date,
   location: mongoose.Schema.Types.Mixed,//{type: mongoose.Schema.Types.ObjectId, ref: 'GPSCoordinate'},	//Longitude and Latitude.
-    comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}]	//Array of Comment Objects. I don't have a separate class for this because it's only used here.
+    comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],	//Array of Comment Objects. I don't have a separate class for this because it's only used here.
+    user: String
 }, {collection: 'threads'});
 
 threadSchema.method.addComment = function(commentData, callback)

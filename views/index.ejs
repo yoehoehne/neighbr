@@ -3,8 +3,11 @@
 <head>
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
+    <script src="bower_components/angular-socket-io/socket.js"></script>
 	<script src="js/app.js"></script>
+    <script src="js/services.js"></script>
 	<script type="text/javascript">
 		
 		var latitude = 40.23;
@@ -43,10 +46,7 @@
 		
 
 		
-		function SubmitComment()
-		{
-			//Access socket.io and refresh this textarea accordingly
-		}
+
 		
 		function RefreshMe()
 		{
@@ -106,18 +106,27 @@
 							</h3> 
 						</div>
 						<div style="overflow-y:scroll; height:451px;">
-							<div id="{{$index}}" ng-click="openRoom($index)" class="label" ng-class="{'new-row': startNewRow($index, 3) }" ng-repeat="item in items">
-								<p><message>{{ item.message }}</message></p>
-								<username>--{{ item.name }}</username>
+							<div id="{{$index}}" ng-click="openRoom(thread)" class="label" ng-class="{'new-row': startNewRow($index, 3) }" ng-repeat="thread in threads">
+								<p>{{ thread.firstPost }}</p>
+								<p>--{{ thread.user }}</p>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-4 column">
 						<h3>Current Thread</h3>
-						<div id="focusBoard" style="overflow-y:scroll; height:210px;"></div>
+						<div id="focusBoard" style="overflow-y:scroll; height:210px;">
+                            <ul class="list-group">
+                                <div ng-repeat="comment in currentThread.comments">
+                                    <h4 class="list-group-item-heading">{{comment.user}}</h4>
+                                    <li class="list-group-item">{{comment.body}}</li>
+                                </div>
+                            </ul>
+                        </div>
 						<div style="padding-top:0px; padding-bottom:10px">
-							<input placeholder="new comment" id="comment" style="height:32px; width:287px;">
-							<button onclick="SubmitComment()" class="btn btn-success">Submit</button>
+                            <form ng-submit="SubmitComment()">
+                                <input ng-model="comment" name="comment" placeholder="new comment" class="form-control"/>
+                                <input type="submit" id="submit" value="Submit" class="btn btn-success"/>
+                            </form>
 						</div>
 						<div id="map-canvas"></div>
 						<div>

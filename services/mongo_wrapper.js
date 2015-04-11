@@ -32,17 +32,17 @@ var createThread = function(data, callback)
 //Will add a comment to the array of comments in the given thread.
 var addComment = function(threadID, commentData, callback)
 {
-	var query = Thread.findOne().where('ObjectID', threadID);
-	query.exec(function(err, thread)
-	{
-		thread.addComment(commentData, function(query)
-		{
-			console.log("Added this comment to the thread in the array.");
-			console.log(thread);
-		});
-	});
+    var comment = new Comment(commentData);
+    comment.save(function(err, comm){
+        if(err){
+            console.log(err);
+        }
 
-	callback("SUCCESS");
+        Thread.findByIdAndUpdate(threadID,{$push: {comments: comm}}, function(err, thread){
+            if(err) throw err;
+            callback(thread);
+        });
+    })
 }
 
 //Read: Returns all threads.
@@ -77,7 +77,7 @@ var readNearbyThreads = function(latitude, longitude, radius, callback)
 
 var readThread = function(threadID, callback)
 {
-    Thread.findOne().where({'ObjectID': threadID}, function(err, data){
+    Thread.findById(threadID, function(err, thread){
         callback(err, thread);
     });
 };
