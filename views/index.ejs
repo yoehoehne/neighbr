@@ -67,7 +67,6 @@
 						<div style="overflow-y:scroll; height:451px;">
 							<div id="{{$index}}" ng-click="openRoom(thread)" class="label" ng-class="{'new-row': startNewRow($index, 3) }" ng-repeat="thread in threads">
 								<p>{{ thread.firstPost }}</p>
-								<p>--{{ thread.user }}</p>
 							</div>
 						</div>
 					</div>
@@ -81,7 +80,7 @@
                                 </div>
                             </ul>
                         </div>
-						<div style="padding-top:0px; padding-bottom:10px">
+						<div style="padding-bottom:10px">
                             <form ng-submit="SubmitComment()">
                                 <input ng-model="comment" name="comment" placeholder="new comment" class="form-control"/>
                                 <input type="submit" id="submit" value="Submit" class="btn btn-success"/>

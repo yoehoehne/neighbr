@@ -54,14 +54,18 @@
 			{
 				var jsonAsText = '{ "radius":' + searchRadius + ',"latitude":' + latitude + ',"longitude":' + longitude + '}';
 				var jsonToSend = JSON.parse(jsonAsText);
-				console.log(jsonToSend);		
 			
 				$(document).ready(function()
 				{
 					var url = "/api/nearByThreads";
 					$.post(url,jsonToSend,function(data) 
 					{
-						console.log(data);
+						scope.threads = [];
+						for(var i = 0; i < data.length; i++)
+						{
+							scope.threads.push(data[i]);
+						}
+						scope.$apply();
 					});
 				});
 			}
