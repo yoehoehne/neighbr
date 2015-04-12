@@ -9,67 +9,16 @@
     <script src="bower_components/angular-socket-io/socket.js"></script>
 	<script src="js/app.js"></script>
     <script src="js/services.js"></script>
-	<script type="text/javascript">
-		
+	
+	<script type="text/javascript">	
 		var latitude = 40.23;
 		var longitude = -111.65;
 		var searchRadius = 800;
 		var prevLat = 0;
 		var prevLong = 0;
 		var prevRadius = 800;
-		
-		function CheckCoordinate() 
-		{
-			var watchID = navigator.geolocation.watchPosition(function(position) 
-			{
-				latitude = position.coords.latitude;
-				longitude = position.coords.longitude;
-				if(Math.abs(latitude-prevLat) > .0001 || Math.abs(longitude-prevLong) > .0001)//Can play with this threshold value
-				{
-					prevLat = latitude;
-					prevLong = longitude;
-					initialize();
-				}	
-				RefreshMe();
-			});
-		}
-		
-		function ChangeRadius()
-		{
-			searchRadius = document.getElementById("radius").value*1609.34;
-			if(Math.abs(searchRadius - prevRadius) > 0)
-			{
-				prevRadius = searchRadius;
-				initialize();
-				RefreshMe();
-			}
-		}
-		
-
-		
-
-		
-		function RefreshMe()
-		{
-			var jsonAsText = '{ "radius":' + searchRadius + ',"latitude":' + latitude + ',"longitude":' + longitude + '}';
-			var jsonToSend = JSON.parse(jsonAsText);
-			console.log(jsonToSend);		
-			
-			$(document).ready(function()
-			{
-				var url = "/api/nearByThreads";
-				$.post(url,jsonToSend,function(data) 
-				{
-					console.log(data);
-				});
-			});
-		}
-		
 	</script>
 	
-	<script id="jsbin-javascript">
-		
-	</script>
 	<script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDV8qVb-dG-Ct4bVbdw8-Cq4_Ax2UTxo1w">
     </script>
@@ -101,7 +50,7 @@
     </script>
 </head>
 
-<body ng-controller="Controller" onload="CheckCoordinate()">
+<body ng-controller="Controller" ng-init="CheckCoordinate()">
 	<div class="container">
 		<div class="row clearfix">
 			<div class="col-md-12 column">
@@ -141,7 +90,7 @@
 						<div id="map-canvas"></div>
 						<div>
 							<input placeholder="radius in miles" id="radius" style="height:33px; width:232px;">
-							<button onclick="ChangeRadius()" class="btn btn-success">Change Radius</button>
+							<button ng-click="ChangeRadius()" class="btn btn-success">Change Radius</button>
 						</div>
 					</div>
 				</div>
