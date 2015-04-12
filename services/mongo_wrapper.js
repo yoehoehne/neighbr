@@ -61,12 +61,26 @@ var readThreads = function(callback)
 //Needs testing
 var readNearbyThreads = function(latitude, longitude, radius, callback)
 {
-	var yMax = latitude + radius;
-	var yMin = latitude - radius;
-	var xMax = longitude + radius;
-	var xMin = longitude - radius;
+    	var metersPerLat = 111045.0;
+    	var metersPerLong = 85000.0;
 
-	var query = Thread.find().where('location.longitude').gt(yMin).lt(yMax).where('location.latitude').gt(xMin).lt(xMax);
+	var radiusLat = radius / metersPerLat;
+	var radiusLong = radius / metersPerLong;
+	
+	console.log(radiusLat);
+    	console.log(radiusLong);	
+
+	var yMax = latitude + radiusLat;
+	var yMin = latitude - radiusLat;
+	var xMax = longitude + radiusLong;
+	var xMin = longitude - radiusLong;
+
+	console.log("ymax: " + yMax);
+	console.log("ymin: " + yMin);
+	console.log("xmax: " + xMax);
+	console.log("xmin: " + xMin);
+	
+	var query = Thread.find().where('location.longitude').gt(xMin).lt(xMax).where('location.latitude').gt(yMin).lt(yMax);
 	query.exec(function(err, data) {
             if (err) {
                 return err;
