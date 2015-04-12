@@ -1,6 +1,6 @@
 	angular.module('neighbr', ['btford.socket-io'])
 	.controller('Controller', ['$scope','$http','socket', function (scope, $http, socket)
-		{
+		{		
             scope.comment = ''; // model for the text input
             scope.currentThread = null; // the current thread that's being used
 			scope.threads = []; // all the threads in this location
@@ -22,6 +22,50 @@
 
                 socket.emit('switchRoom', newroom);
 			};
+					
+			scope.ChangeRadius = function()
+			{
+				searchRadius = document.getElementById("radius").value*1609.34;
+				if(Math.abs(searchRadius - prevRadius) > 0)
+				{
+					prevRadius = searchRadius;
+					initialize();
+					scope.RefreshMe();
+				}
+			}
+			
+			scope.CheckCoordinate = function() 
+			{
+				var watchID = navigator.geolocation.watchPosition(function(position) 
+				{
+					latitude = position.coords.latitude;
+					longitude = position.coords.longitude;
+					if(Math.abs(latitude-prevLat) > .0001 || Math.abs(longitude-prevLong) > .0001)//Can play with this threshold value
+					{
+						prevLat = latitude;
+						prevLong = longitude;
+						initialize();
+					}	
+					scope.RefreshMe();
+				});
+			}
+			
+			scope.RefreshMe = function()
+			{
+				var jsonAsText = '{ "radius":' + searchRadius + ',"latitude":' + latitude + ',"longitude":' + longitude + '}';
+				var jsonToSend = JSON.parse(jsonAsText);
+				console.log(jsonToSend);		
+			
+				$(document).ready(function()
+				{
+					var url = "/api/nearByThreads";
+					$.post(url,jsonToSend,function(data) 
+					{
+						console.log(data);
+					});
+				});
+			}
+			
 
             scope.NewThread = function ()
             {
