@@ -1,4 +1,4 @@
-	angular.module('neighbr', ['btford.socket-io'])
+	angular.module('neighbr', ['btford.socket-io', 'luegg.directives'])
 	.controller('Controller', ['$scope','$http','socket', function (scope, $http, socket)
 		{		
             scope.comment = ''; // model for the text input

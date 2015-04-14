@@ -6,6 +6,7 @@
 	<link rel="shortcut icon" href="http://faviconist.com/icons/c6215edc18000d8348457becbc909cf7/favicon.ico" />
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/Luegg/angularjs-scroll-glue/v2.0.4/src/scrollglue.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
     <script src="bower_components/angular-socket-io/socket.js"></script>
 	<script src="js/app.js"></script>
@@ -78,10 +79,10 @@
                             <div class="col-md-4">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading" id="firstPost">
-                                        <span class="glyphicon glyphicon-comment"></span> {{currentThread.firstPost}}
+                                        <h4>{{currentThread.firstPost}}</h4>
                                     </div>
                                     <div class="panel-default">
-                                        <div class="panel-body">
+                                        <div class="panel-body" scroll-glue>
                                             <ul class="chat">
                                                 <div ng-repeat="comment in currentThread.comments">
                                                 <li class="left clearfix">
