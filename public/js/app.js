@@ -4,6 +4,7 @@
             scope.comment = ''; // model for the text input
             scope.currentThread = null; // the current thread that's being used
 			scope.threads = []; // all the threads in this location
+			scope.threadPreview = [];
 
 			scope.columnBreak = 3;
 
@@ -13,8 +14,10 @@
 				return ((index) % count) === 0;
 			};
 
-			scope.openRoom = function(thread)
+			scope.openRoom = function(threadIndex)
 			{
+				//So yeah, receive an index instead and evaluate the associated thread from that
+				var thread = scope.threads[threadIndex];
                 var newroom =
                 {
                     id: thread._id
@@ -65,6 +68,28 @@
 						{
 							scope.threads.push(data[i]);
 						}
+						//Now I would want to sort the threads, then do the following. Either that, or these previews need to include timestamp.
+						var threadPreviewBuilder = '{"threads" : [';
+						for(var j = 0; j < (scope.threads.length); j++)
+						{
+							var messageToDisplay = scope.threads[j].firstPost;
+							if(messageToDisplay.length > 105)
+							{
+								messageToDisplay = messageToDisplay.substring(0, 102);
+								messageToDisplay += '...';
+							}
+							threadPreviewBuilder += '{"message":"';
+							threadPreviewBuilder += messageToDisplay;
+							threadPreviewBuilder += '","timestamp":"';
+							threadPreviewBuilder += scope.threads[j]//Get timestamp value  .entries[0].name;
+							//Could get the last post on the messages, set it from this. Then use it as a filter
+							if (j < (scope.threads.length - 1))
+								threadPreviewBuilder += '"},';
+							else
+							threadPreviewBuilder += '"}]}';
+						}
+						scope.threadPreview = JSON.parse(threadPreviewBuilder);
+						console.log(scope.threads);
 						scope.$apply();
 					});
 				});
