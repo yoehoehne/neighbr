@@ -77,10 +77,10 @@
 
                             <div class="col-md-4">
                                 <div class="panel panel-primary">
-                                    <div class="panel-heading">
-                                        <span class="glyphicon glyphicon-comment"></span> Chat
+                                    <div class="panel-heading" id="firstPost">
+                                        <span class="glyphicon glyphicon-comment"></span> {{currentThread.firstPost}}
                                     </div>
-                                    <div class="panel-default" ng-show="currentThread != null">
+                                    <div class="panel-default">
                                         <div class="panel-body">
                                             <ul class="chat">
                                                 <div ng-repeat="comment in currentThread.comments">
@@ -98,11 +98,11 @@
                                                 </div>
                                             </ul>
                                         </div>
-                                        <div class="panel-footer">
-                                            <form class="input-group" ng-submit="SubmitComment()">
-                                                <input id="btn-input" type="text" class="form-control input-sm" ng-model="comment" placeholder="Type your message here..." />
+                                        <div class="panel-footer" >
+                                            <form class="input-group" ng-submit="SubmitComment()" >
+                                                <input id="btn-input" type="text" class="form-control input-sm" ng-model="comment" placeholder="Type your message here..." ng-disabled="currentThread == null"/>
                         <span class="input-group-btn" >
-                            <button class="btn btn-warning btn-sm" id="btn-chat">
+                            <button class="btn btn-warning btn-sm" id="btn-chat" ng-disabled="currentThread == null">
                                 Send</button>
                         </span>
                                             </form>

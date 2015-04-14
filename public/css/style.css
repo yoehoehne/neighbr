@@ -15,7 +15,8 @@
 		padding-top:40px;
 		font-size: 14px;
 		font-weight: bold;
-	}
+
+    }
 	.label 
 	{
 		float: left;
@@ -86,7 +87,7 @@
 
     .panel-body
     {
-        overflow-y: scroll;
+        overflow-y: auto;
         height: 250px;
     }
 
@@ -110,4 +111,9 @@
     .panel
     {
         margin-top: 20px;
+    }
+    #firstPost
+    {
+        overflow-y: auto;
+        height: 100px;
     }
