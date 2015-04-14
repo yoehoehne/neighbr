@@ -68,7 +68,7 @@
 						{
 							scope.threads.push(data[i]);
 						}
-						//Now I would want to sort the threads, then do the following. Either that, or these previews need to include timestamp.
+						
 						var threadPreviewBuilder = '{"threads" : [';
 						for(var j = 0; j < (scope.threads.length); j++)
 						{
@@ -81,15 +81,14 @@
 							threadPreviewBuilder += '{"message":"';
 							threadPreviewBuilder += messageToDisplay;
 							threadPreviewBuilder += '","timestamp":"';
-							threadPreviewBuilder += scope.threads[j]//Get timestamp value  .entries[0].name;
-							//Could get the last post on the messages, set it from this. Then use it as a filter
+							threadPreviewBuilder += Date.parse(scope.threads[j].timestamp);
+							
 							if (j < (scope.threads.length - 1))
 								threadPreviewBuilder += '"},';
 							else
-							threadPreviewBuilder += '"}]}';
+								threadPreviewBuilder += '"}]}';
 						}
 						scope.threadPreview = JSON.parse(threadPreviewBuilder);
-						console.log(scope.threads);
 						scope.$apply();
 					});
 				});

@@ -65,7 +65,7 @@
 							</h3> 
 						</div>
 						<div style="overflow-y:scroll; height:451px;"><!--So the issue is that openRoom uses the thread beneath, which is no longer the right type. Try using index instead, and then in the openRoom() function you can find the correct object to send over-->
-							<div id="{{$index}}" ng-click="openRoom($index)" class="label" ng-class="{'new-row': startNewRow($index, 3) }" ng-repeat="thread in threadPreview.threads">
+							<div id="{{$index}}" ng-click="openRoom($index)" class="label" ng-class="{'new-row': startNewRow($index, 3) }" ng-repeat="thread in threadPreview.threads | orderBy: 'timestamp'">
 								<p>{{ thread.message }}</p>
 							</div>
 						</div>
