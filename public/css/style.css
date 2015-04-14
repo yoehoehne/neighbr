@@ -8,16 +8,15 @@
 		font-size: 14px;
 		font-weight: bold;
 	}
-	.label p
+	.myLabel p
 	{
 		padding-left:20px;
 		padding-right:20px;
 		padding-top:40px;
 		font-size: 14px;
 		font-weight: bold;
-
-    }
-	.label 
+	}
+	.myLabel
 	{
 		float: left;
 		text-align: left;
