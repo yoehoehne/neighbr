@@ -16,8 +16,8 @@
 9 verbose stack     at maybeClose (child_process.js:735:16)
 9 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:802:5)
 10 verbose pkgid neighbrAng@0.0.0
-11 verbose cwd /usr/local/src/projects/neighbr/repository
-12 error Linux 3.14.35-28.38.amzn1.x86_64
+11 verbose cwd /var/node/neighbr/neighbr
+12 error Linux 3.14.27-25.47.amzn1.x86_64
 13 error argv "node" "/usr/local/bin/npm" "start"
 14 error node v0.10.21
 15 error npm  v2.7.0

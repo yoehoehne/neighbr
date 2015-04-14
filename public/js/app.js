@@ -14,10 +14,9 @@
 				return ((index) % count) === 0;
 			};
 
-			scope.openRoom = function(threadIndex)
+			scope.openRoom = function(thread)
 			{
 				//So yeah, receive an index instead and evaluate the associated thread from that
-				var thread = scope.threads[threadIndex];
                 var newroom =
                 {
                     id: thread._id
@@ -69,7 +68,6 @@
 							scope.threads.push(data[i]);
 						}
 						
-						var threadPreviewBuilder = '{"threads" : [';
 						for(var j = 0; j < (scope.threads.length); j++)
 						{
 							var messageToDisplay = scope.threads[j].firstPost;
@@ -78,17 +76,8 @@
 								messageToDisplay = messageToDisplay.substring(0, 102);
 								messageToDisplay += '...';
 							}
-							threadPreviewBuilder += '{"message":"';
-							threadPreviewBuilder += messageToDisplay;
-							threadPreviewBuilder += '","timestamp":"';
-							threadPreviewBuilder += Date.parse(scope.threads[j].timestamp);
-							
-							if (j < (scope.threads.length - 1))
-								threadPreviewBuilder += '"},';
-							else
-								threadPreviewBuilder += '"}]}';
+							scope.threads[j].firstPost = messageToDisplay;
 						}
-						scope.threadPreview = JSON.parse(threadPreviewBuilder);
 						scope.$apply();
 					});
 				});
@@ -103,11 +92,12 @@
                     var thread = {}
                     thread.firstPost = entry;
                     thread.timestamp = new Date();
-                    thread.location = {latitude: latitude, longitude: longitude};
+                    thread.latestTimestamp = new Date();
+		    thread.location = {latitude: latitude, longitude: longitude};
                     thread.comments = [];
                     $http.post('/api/thread', thread).
                         success(function(savedThread){
-                            console.log(savedThread);
+			    console.log(savedThread);
                             scope.threads.push(savedThread);
                         }).
                         error(function(data){
@@ -121,7 +111,7 @@
                 var comment = scope.comment;
                 scope.comment = '';
                 socket.emit('commentPosted', comment);
-            }
+	    }
 
 
             socket.on('roomChanged', function(thread){
