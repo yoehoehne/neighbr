@@ -4,6 +4,7 @@
             scope.comment = ''; // model for the text input
             scope.currentThread = null; // the current thread that's being used
 			scope.threads = []; // all the threads in this location
+			scope.threadPreview = [];
 
 			scope.columnBreak = 3;
 
@@ -13,8 +14,10 @@
 				return ((index) % count) === 0;
 			};
 
-			scope.openRoom = function(thread)
+			scope.openRoom = function(threadIndex)
 			{
+				//So yeah, receive an index instead and evaluate the associated thread from that
+				var thread = scope.threads[threadIndex];
                 var newroom =
                 {
                     id: thread._id
@@ -65,6 +68,27 @@
 						{
 							scope.threads.push(data[i]);
 						}
+						
+						var threadPreviewBuilder = '{"threads" : [';
+						for(var j = 0; j < (scope.threads.length); j++)
+						{
+							var messageToDisplay = scope.threads[j].firstPost;
+							if(messageToDisplay.length > 105)
+							{
+								messageToDisplay = messageToDisplay.substring(0, 102);
+								messageToDisplay += '...';
+							}
+							threadPreviewBuilder += '{"message":"';
+							threadPreviewBuilder += messageToDisplay;
+							threadPreviewBuilder += '","timestamp":"';
+							threadPreviewBuilder += Date.parse(scope.threads[j].timestamp);
+							
+							if (j < (scope.threads.length - 1))
+								threadPreviewBuilder += '"},';
+							else
+								threadPreviewBuilder += '"}]}';
+						}
+						scope.threadPreview = JSON.parse(threadPreviewBuilder);
 						scope.$apply();
 					});
 				});

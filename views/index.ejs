@@ -3,7 +3,8 @@
 <head>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
+	<link rel="shortcut icon" href="http://faviconist.com/icons/c6215edc18000d8348457becbc909cf7/favicon.ico" />
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
     <script src="bower_components/angular-socket-io/socket.js"></script>
@@ -48,6 +49,7 @@
 		}
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
+    <title>neighbr</title>
 </head>
 
 <body ng-controller="Controller" ng-init="CheckCoordinate()">
@@ -64,9 +66,9 @@
 								<button ng-click="NewThread()" class="btn btn-success">Create New Thread</button>
 							</h3> 
 						</div>
-						<div style="overflow-y:scroll; height:451px;">
-							<div id="{{$index}}" ng-click="openRoom(thread)" class="label" ng-class="{'new-row': startNewRow($index, 3) }" ng-repeat="thread in threads">
-								<p>{{ thread.firstPost }}</p>
+						<div style="overflow-y:scroll; height:451px;"><!--So the issue is that openRoom uses the thread beneath, which is no longer the right type. Try using index instead, and then in the openRoom() function you can find the correct object to send over-->
+							<div id="{{$index}}" ng-click="openRoom($index)" class="label" ng-class="{'new-row': startNewRow($index, 3) }" ng-repeat="thread in threadPreview.threads | orderBy: 'timestamp'">
+								<p>{{ thread.message }}</p>
 							</div>
 						</div>
 					</div>
