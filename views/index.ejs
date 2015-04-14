@@ -66,8 +66,8 @@
 								<button ng-click="NewThread()" class="btn btn-success">Create New Thread</button>
 							</h3> 
 						</div>
-						<div style="overflow-y:scroll; height:451px;"><!--So the issue is that openRoom uses the thread beneath, which is no longer the right type. Try using index instead, and then in the openRoom() function you can find the correct object to send over-->
-							<div id="{{$index}}" ng-click="openRoom(thread)" class="label" ng-class="{'new-row': startNewRow($index, 3) }" ng-repeat="thread in threads | orderBy: '-latestTimestamp'">
+						<div style="overflow-y:scroll; height:451px;">
+							<div id="{{$index}}" ng-click="openRoom(thread)" class="myLabel" ng-class="{'new-row': startNewRow($index, 3) }" ng-repeat="thread in threads | orderBy: '-latestTimestamp'">
 								<p>{{ thread.firstPost }}</p>
 							</div>
 						</div>
