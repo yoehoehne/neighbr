@@ -23,7 +23,8 @@ var createThread = function(data, callback)
 	console.log("Inserting new thread into database.")
 
 	var thread = new Thread(data);
-	thread.save(function(err, thread)
+	console.log(thread);
+        thread.save(function(err, thread)
 	{
 		callback(err, thread);
 	});
@@ -40,7 +41,12 @@ var addComment = function(threadID, commentData, callback)
 
         Thread.findByIdAndUpdate(threadID,{$push: {comments: comm}}, function(err, thread){
             if(err) throw err;
-            callback(thread);
+
+	    Thread.findByIdAndUpdate(threadID, {$set: {'latestTimestamp': comment.timestamp }}, function(err, thread) {
+                if (err) throw err;
+               	console.log(thread); 
+                callback(thread);
+            });
         });
     })
 }
