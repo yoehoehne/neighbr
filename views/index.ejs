@@ -67,7 +67,7 @@
 								<button ng-click="NewThread()" class="btn btn-success pull-right">Create New Thread</button>
 							</h3> 
 						</div>
-						<div style="overflow-y:auto; height:451px;">
+						<div style="overflow-y:auto; height:auto;">
 							<div id="{{$index}}" ng-click="openRoom(thread)" class="myLabel" ng-class="{'new-row': startNewRow($index, 3) }" ng-repeat="thread in threads | orderBy: '-latestTimestamp'">
 								<p>{{ thread.firstPost }}</p>
 							</div>

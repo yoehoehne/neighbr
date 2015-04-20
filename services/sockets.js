@@ -25,8 +25,6 @@ module.exports.listen = function (app) {
 
         // when the client emits 'sendchat', this listens and executes
         socket.on('commentPosted', function (message) {
-            console.log("commentPosted event fired")
-
             var comment =
             {
                 body: message,
@@ -41,7 +39,6 @@ module.exports.listen = function (app) {
         });
 
         socket.on('switchRoom', function (newroom) {
-            console.log("switchRoom event fired")
             mongo_wrapper.readThread(newroom.id, function(err,thread){
                 socket.leave(socket.room.id);
                 socket.join(newroom.id);
@@ -49,7 +46,6 @@ module.exports.listen = function (app) {
                 thread.populate('comments', function(err, popthread){
                     socket.emit('roomChanged', popthread); // pass back the current thread
                 })
-
             });
         });
 
